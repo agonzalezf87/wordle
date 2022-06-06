@@ -9,6 +9,7 @@ const title = ['W','O','R','D','L','E','J','S']
 let sixLettersArray = []
 let fourLettersArray = []
 let tries = 0
+let userArray = []
 
 const $ = (id) => document.querySelector(id)
 
