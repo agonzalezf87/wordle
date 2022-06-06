@@ -6,9 +6,11 @@ const keyboard = [
 
 const title = ['W','O','R','D','L','E','J','S']
 
-let sixLettersArray = []
 let fourLettersArray = []
-let tries = 0
+let fiveLettersArray = []
+let sixLettersArray = ['p','l','a','t','z','i']
+let tries = 1
+let wordDimension = 6
 let userArray = []
 
 const $ = (id) => document.querySelector(id)
@@ -23,7 +25,7 @@ const createDisplay = (lenght) => {
         case 4:
             for(let i = 0; i < 6; i++){
                 const heroDisplayRow = document.createElement('div')
-                heroDisplayRow.classList.add('hero__display__row')
+                heroDisplayRow.classList.add('hero__display__row', 'short')
                 for(let j = 0; j < 4; j++){
                     const displayCard = document.createElement('div')
                     displayCard.classList.add('card', 'display__card')
@@ -31,6 +33,7 @@ const createDisplay = (lenght) => {
                 }
                 displayGrid.appendChild(heroDisplayRow)
             }
+            wordDimension = 4
         break
         
         case 5:
@@ -44,6 +47,7 @@ const createDisplay = (lenght) => {
                 }
                 displayGrid.appendChild(heroDisplayRow)
             }
+            wordDimension = 5
         break
 
         default:
@@ -86,12 +90,13 @@ const loadKeyboard = () => {
                 deleteIcon.classList.add('fa-solid', 'fa-delete-left')
                 keyboardCard.appendChild(deleteIcon)
                 keyboardCard.setAttribute('title', key)
+                keyboardCard.onclick = () => writeLetter(key)
                 keyboardRow.appendChild(keyboardCard)
             }else {
                 const cardText = document.createTextNode(key)
                 keyboardCard.appendChild(cardText)
                 keyboardCard.setAttribute('title', key)
-                if(key === 'enter'){}
+                keyboardCard.onclick = () => writeLetter(key)
                 keyboardRow.appendChild(keyboardCard)
             }
         })
@@ -99,6 +104,55 @@ const loadKeyboard = () => {
     })
 }
 
+const writeLetter = (key) => {
+    switch (key) {
+        case 'enter':
+            if(tries <= 5){
+                validateWord()
+                /* tries++
+                userArray = [] */
+            }else if(tries === 6){
+                
+            }
+        break
+        case 'delete':
+            if(userArray.length > 0){
+                displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = ''
+                userArray.splice(-1)
+            }
+        break
+        default:
+            switch (wordDimension) {
+                case 4:
+                    if(userArray.length < 4){
+                        userArray.push(key)
+                        displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = key
+                    }
+                break
+                case 5:
+                    if(userArray.length < 5){
+                        userArray.push(key)
+                        displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = key
+                    }
+                break
+                default:
+                    if(userArray.length < 6){
+                        userArray.push(key)
+                        displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = key
+                    }
+                break
+            }
+        break
+    }
+    console.log(userArray)
+}
+
+const validateWord = () => {
+    if(userArray.length === 4) {
+
+    }
+}
+
 loadTitle()
-createDisplay()
+createDisplay(4)
 loadKeyboard()

@@ -134,7 +134,7 @@ button:active {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     height: calc(100vh - 88px);
     margin-top: 56px;
 }
@@ -188,9 +188,9 @@ button:active {
 
 .hero__display {    
     width: 100%;
-    height: fit-content;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     margin-top: 5px;
 }
 
@@ -200,6 +200,10 @@ button:active {
     display: flex;
     justify-content: center;
     margin: 2px 0;
+}
+
+.hero__display__row.short {
+    width: 75%;
 }
 
 .display__card {
@@ -278,15 +282,15 @@ button:active {
 @media screen and (min-width: 600px) {
     .main {
         width: 600px;
-        margin: 0 auto;
+        margin: 56px auto 0;
     }
     
     .hero {
-        width: 420px;
+        width: 380px;
     }
 
     .hero__display__row {
-        height: calc(420px / 6);
+        height: calc(300px / 6);
     }
 
     .keyboard {
