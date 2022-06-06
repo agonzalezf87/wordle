@@ -265,6 +265,10 @@ button:active {
 }
 
 @media screen and (min-width: 480px) {
+    .hero {
+        width: 380px;
+    }
+
     .hero__display__row {
         height: calc(300px / 6);
     }
@@ -277,11 +281,11 @@ button:active {
     }
     
     .hero {
-        width: 360px;
+        width: 420px;
     }
 
     .hero__display__row {
-        height: calc(360px / 6);
+        height: calc(420px / 6);
     }
 
     .keyboard {
@@ -292,15 +296,5 @@ button:active {
 @media screen and (min-width: 800px) {
     .main {
         width: 800px;
-    }
-    
-    .hero {
-        width: 420px;
-    }
-
-    .hero__display__row {
-        height: calc(420px / 6);
-    }
-
-    
+    }    
 }
