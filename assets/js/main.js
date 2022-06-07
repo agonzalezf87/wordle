@@ -3,25 +3,24 @@ const keyboard = [
     ['a','s','d','f','g','h','j','k','l'],
     ['delete','z','x','c','v','b','n','m','enter']
 ]
-
 const title = ['W','O','R','D','L','E','J','S']
 
-let fourLettersArray = []
-let fiveLettersArray = []
+let fourLettersArray = ['p','i','l','a']
+let fiveLettersArray = ['v','o','l','a','r']
 let sixLettersArray = ['p','l','a','t','z','i']
+let gameArray = []
 let tries = 1
-let wordDimension = 6
+// let wordDimension = 6
 let userArray = []
-
 const $ = (id) => document.querySelector(id)
 
 const displayGrid = $('#displayGrid')
 const keyboardSection = $('#keyboard')
 const headerTitle = $('#headerTitle')
 
-const createDisplay = (lenght) => {
+const createDisplay = (length) => {
     displayGrid.innerHTML = ''
-    switch (lenght){
+    switch (length){
         case 4:
             for(let i = 0; i < 6; i++){
                 const heroDisplayRow = document.createElement('div')
@@ -33,9 +32,8 @@ const createDisplay = (lenght) => {
                 }
                 displayGrid.appendChild(heroDisplayRow)
             }
-            wordDimension = 4
+            fourLettersArray.forEach(key => gameArray.push(key))
         break
-        
         case 5:
             for(let i = 0; i < 6; i++){
                 const heroDisplayRow = document.createElement('div')
@@ -47,9 +45,8 @@ const createDisplay = (lenght) => {
                 }
                 displayGrid.appendChild(heroDisplayRow)
             }
-            wordDimension = 5
+            fiveLettersArray.forEach(key => gameArray.push(key))
         break
-
         default:
             for(let i = 0; i < 6; i++){
                 const heroDisplayRow = document.createElement('div')
@@ -61,6 +58,7 @@ const createDisplay = (lenght) => {
                 }
                 displayGrid.appendChild(heroDisplayRow)
             }
+            sixLettersArray.forEach(key => gameArray.push(key))
         break
     }
 }
@@ -107,12 +105,11 @@ const loadKeyboard = () => {
 const writeLetter = (key) => {
     switch (key) {
         case 'enter':
-            if(tries <= 5){
+            // console.log(tries)
+            if(userArray.length === gameArray.length){
                 validateWord()
-                /* tries++
-                userArray = [] */
-            }else if(tries === 6){
-                
+            }else{
+                alert(`The word must have ${gameArray.length} letters!`)
             }
         break
         case 'delete':
@@ -122,7 +119,7 @@ const writeLetter = (key) => {
             }
         break
         default:
-            switch (wordDimension) {
+            switch (gameArray.length) {
                 case 4:
                     if(userArray.length < 4){
                         userArray.push(key)
@@ -144,15 +141,31 @@ const writeLetter = (key) => {
             }
         break
     }
-    console.log(userArray)
 }
 
 const validateWord = () => {
-    if(userArray.length === 4) {
+    let currentRow = displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`)
+    let userWon = 0
+    let gameStr = userArray.join('')
 
+    for(let i = 0; i < userArray.length; i++){
+        if(userArray[i] === gameArray[i]){
+            currentRow.querySelector(`div:nth-child(${i+1})`).classList.add('card--green')
+            userWon++
+        }else if(gameArray.find(key => key === userArray[i])){
+            currentRow.querySelector(`div:nth-child(${i+1})`).classList.add('card--yellow')
+        }else{
+            currentRow.querySelector(`div:nth-child(${i+1})`).classList.add('card--gray')
+        }
+    }
+    if(userWon === gameArray.length){
+        alert(`You found the word! \n ${gameStr}`)
+    }else{
+        tries++
+        userArray = []
     }
 }
 
 loadTitle()
-createDisplay(4)
+createDisplay()
 loadKeyboard()
