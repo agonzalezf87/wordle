@@ -1,25 +1,6 @@
-const keyboard = [
-    ['q','w','e','r','t','y','u','i','o','p',],
-    ['a','s','d','f','g','h','j','k','l'],
-    ['delete','z','x','c','v','b','n','m','enter']
-]
-const title = ['W','O','R','D','L','E','J','S']
-
-let fourLettersArray = ['p','i','l','a']
-let fiveLettersArray = ['v','o','l','a','r']
-let sixLettersArray = ['p','l','a','t','z','i']
-let gameArray = []
-let tries = 1
-// let wordDimension = 6
-let userArray = []
-const $ = (id) => document.querySelector(id)
-
-const displayGrid = $('#displayGrid')
-const keyboardSection = $('#keyboard')
-const headerTitle = $('#headerTitle')
-
 const createDisplay = (length) => {
     displayGrid.innerHTML = ''
+    userArray = []
     switch (length){
         case 4:
             for(let i = 0; i < 6; i++){
@@ -167,5 +148,17 @@ const validateWord = () => {
 }
 
 loadTitle()
-createDisplay()
 loadKeyboard()
+
+closeModal.onclick = () => {
+    if(displayGrid.querySelectorAll('div').length > 0){
+        modal.classList.add('hidden')
+    }
+}
+
+btnFourLetters.onclick = () => createDisplay(4)
+btnFiveLetters.onclick = () => createDisplay(5)
+btnSixLetters.onclick = () => createDisplay(6)
+
+gameSettings.onclick = () => modal.classList.contains('hidden') ? modal.classList.remove('hidden') : console.log('Modal is active')
+gameInfo.onclick = () => modal.classList.contains('hidden') ? modal.classList.remove('hidden') : console.log('Modal is active')

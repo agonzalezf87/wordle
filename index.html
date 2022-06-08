@@ -16,19 +16,33 @@
             <section id="headerTitle" class="header__title">
             </section>
         </header>
+        <section id="modal" class="modal">
+            <div class="modal--close" id="closeModal">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div class="modal__title">
+                <h2>Game Settings</h2>
+                <h2 class="hidden">Game Info</h2>
+            </div>
+            <div class="modal__label">Words Language</div>
+            <div class="modal__action">
+                <button class="modal__action__btn" id="langEng" type="button">🇬🇧 English</button><button class="modal__action__btn" id="langEsp" type="button">🇲🇽 Español</button>
+            </div>
+            <div class="modal__label">Secret Word Length</div>
+            <div class="modal__action">
+                <button class="modal__action__btn" id="btnFourLetters" type="button">4 Letters</button><button class="modal__action__btn" id="btnFiveLetters" type="button">5 Letters</button><button class="modal__action__btn" id="btnSixLetters" type="button">6 Letters</button>
+            </div>
+        </section>
         <main class="main">
             <section class="hero">
                 <nav class="hero__nav">
-                    <aside class="hero__nav__language">
-                        <div class="hero__nav__button"><i class="fa-solid fa-language"></i></div>
-                    </aside>
                     <aside class="hero__nav__options">
-                        <div class="hero__nav__button"><i class="fa-solid fa-gear"></i></div>
-                        <div class="hero__nav__button"><i class="fa-solid fa-circle-info"></i></div>
+                        <div class="hero__nav__button" id="gameSettings"><i class="fa-solid fa-gear"></i></div>
+                        <div class="hero__nav__button" id="gameInfo"><i class="fa-solid fa-circle-info"></i></div>
                     </aside>
                 </nav>
                 <div id="displayGrid" class="hero__display">
-
+                    
                 </div>
             </section>
             <secttion id="keyboard" class="keyboard">
@@ -37,6 +51,7 @@
         <footer class="footer">
             <section class="footer__text">Made with 💚 by <span class="strong">Antonio Gonzalez Dev</span></section>
         </footer>
+        <script src="./assets/js/nodes.js" type="text/javascript"></script>
         <script src="./assets/js/main.js" type="text/javascript"></script>
     </body>
-</html>
+    </html>
