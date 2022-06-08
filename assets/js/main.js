@@ -1,49 +1,3 @@
-const createDisplay = (length) => {
-    displayGrid.innerHTML = ''
-    userArray = []
-    switch (length){
-        case 4:
-            for(let i = 0; i < 6; i++){
-                const heroDisplayRow = document.createElement('div')
-                heroDisplayRow.classList.add('hero__display__row', 'short')
-                for(let j = 0; j < 4; j++){
-                    const displayCard = document.createElement('div')
-                    displayCard.classList.add('card', 'display__card')
-                    heroDisplayRow.appendChild(displayCard)
-                }
-                displayGrid.appendChild(heroDisplayRow)
-            }
-            fourLettersArray.forEach(key => gameArray.push(key))
-        break
-        case 5:
-            for(let i = 0; i < 6; i++){
-                const heroDisplayRow = document.createElement('div')
-                heroDisplayRow.classList.add('hero__display__row')
-                for(let j = 0; j < 5; j++){
-                    const displayCard = document.createElement('div')
-                    displayCard.classList.add('card', 'display__card')
-                    heroDisplayRow.appendChild(displayCard)
-                }
-                displayGrid.appendChild(heroDisplayRow)
-            }
-            fiveLettersArray.forEach(key => gameArray.push(key))
-        break
-        default:
-            for(let i = 0; i < 6; i++){
-                const heroDisplayRow = document.createElement('div')
-                heroDisplayRow.classList.add('hero__display__row')
-                for(let j = 0; j < 6; j++){
-                    const displayCard = document.createElement('div')
-                    displayCard.classList.add('card', 'display__card')
-                    heroDisplayRow.appendChild(displayCard)
-                }
-                displayGrid.appendChild(heroDisplayRow)
-            }
-            sixLettersArray.forEach(key => gameArray.push(key))
-        break
-    }
-}
-
 const loadTitle = () => {
     title.forEach(letter => {
         const letterCard = document.createElement('div')
@@ -69,11 +23,13 @@ const loadKeyboard = () => {
                 deleteIcon.classList.add('fa-solid', 'fa-delete-left')
                 keyboardCard.appendChild(deleteIcon)
                 keyboardCard.setAttribute('title', key)
+                keyboardCard.id = 'deleteKey'
                 keyboardCard.onclick = () => writeLetter(key)
                 keyboardRow.appendChild(keyboardCard)
             }else {
                 const cardText = document.createTextNode(key)
                 keyboardCard.appendChild(cardText)
+                if(key === 'enter') keyboardCard.id = 'enterKey'
                 keyboardCard.setAttribute('title', key)
                 keyboardCard.onclick = () => writeLetter(key)
                 keyboardRow.appendChild(keyboardCard)
@@ -83,45 +39,75 @@ const loadKeyboard = () => {
     })
 }
 
-const writeLetter = (key) => {
-    switch (key) {
-        case 'enter':
-            // console.log(tries)
-            if(userArray.length === gameArray.length){
-                validateWord()
-            }else{
-                alert(`The word must have ${gameArray.length} letters!`)
-            }
+const createDisplay = (length) => {
+    displayGrid.innerHTML = ''
+    userArray = []
+    gameArray = []
+    switch (length) { /* This will change with dictionary load */
+        case 4:
+            fourLettersArray.forEach(key => gameArray.push(key))
         break
-        case 'delete':
-            if(userArray.length > 0){
-                displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = ''
-                userArray.splice(-1)
-            }
+        case 5:
+            fiveLettersArray.forEach(key => gameArray.push(key))
         break
-        default:
-            switch (gameArray.length) {
-                case 4:
-                    if(userArray.length < 4){
-                        userArray.push(key)
-                        displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = key
-                    }
-                break
-                case 5:
-                    if(userArray.length < 5){
-                        userArray.push(key)
-                        displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = key
-                    }
-                break
-                default:
-                    if(userArray.length < 6){
-                        userArray.push(key)
-                        displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = key
-                    }
-                break
-            }
+        case 6:
+            sixLettersArray.forEach(key => gameArray.push(key))
         break
     }
+    for(let i = 0; i < length; i++){
+        const heroDisplayRow = document.createElement('div')
+        heroDisplayRow.classList.add('hero__display__row', 'short')
+        for(let j = 0; j < gameArray.length; j++){
+            const displayCard = document.createElement('div')
+            displayCard.classList.add('card', 'display__card')
+            heroDisplayRow.appendChild(displayCard)
+        }
+        displayGrid.appendChild(heroDisplayRow)
+    }
+}
+
+const writeLetter = (key) => {
+    if(gameStarted){
+        switch (key) {
+            case 'enter':
+                // console.log(tries)
+                if(userArray.length === gameArray.length){
+                    validateWord()
+                }else{
+                    alert(`The word must have ${gameArray.length} letters!`)
+                }
+            break
+            case 'delete':
+                if(userArray.length > 0){
+                    displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = ''
+                    userArray.splice(-1)
+                }
+            break
+            default:
+                switch (gameArray.length) {
+                    case 4:
+                        if(userArray.length < 4){
+                            userArray.push(key)
+                            displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = key
+                        }
+                    break
+                    case 5:
+                        if(userArray.length < 5){
+                            userArray.push(key)
+                            displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = key
+                        }
+                    break
+                    default:
+                        if(userArray.length < 6){
+                            userArray.push(key)
+                            displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = key
+                        }
+                    break
+                }
+            break
+        }
+    }
+    
 }
 
 const validateWord = () => {
@@ -151,7 +137,7 @@ loadTitle()
 loadKeyboard()
 
 closeModal.onclick = () => {
-    if(displayGrid.querySelectorAll('div').length > 0){
+    if(displayGrid.querySelectorAll('div').length > 0 || modal.classList.contains('modal__info')){
         modal.classList.add('hidden')
     }
 }

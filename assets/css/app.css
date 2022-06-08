@@ -342,6 +342,15 @@ button:active {
     box-shadow: 1px 1px 3px var(--site-color6);
 }
 
+.modal__info {
+    padding: 24px 15px;
+}
+
+.modal__info__content {
+    grid-column: 1 / 3;
+    text-align: center;
+}
+
 /* Element modificators for JS actions */
 
 .hidden {

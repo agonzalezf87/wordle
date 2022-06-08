@@ -16,13 +16,12 @@
             <section id="headerTitle" class="header__title">
             </section>
         </header>
-        <section id="modal" class="modal">
+        <!-- <section id="modal" class="modal hidden">
             <div class="modal--close" id="closeModal">
                 <i class="fa-solid fa-xmark"></i>
             </div>
             <div class="modal__title">
                 <h2>Game Settings</h2>
-                <h2 class="hidden">Game Info</h2>
             </div>
             <div class="modal__label">Words Language</div>
             <div class="modal__action">
@@ -31,6 +30,25 @@
             <div class="modal__label">Secret Word Length</div>
             <div class="modal__action">
                 <button class="modal__action__btn" id="btnFourLetters" type="button">4 Letters</button><button class="modal__action__btn" id="btnFiveLetters" type="button">5 Letters</button><button class="modal__action__btn" id="btnSixLetters" type="button">6 Letters</button>
+            </div>
+        </section> -->
+        <section id="modal" class="modal modal__info">
+            <div class="modal--close" id="closeModal">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div class="modal__title">
+                <h2>How To Play</h2>
+            </div>
+            <div class="modal__info__content">
+                <p>You have to guess the hidden word in 6 tries and the color of the letters changes to show how close you are.</p>
+                <p>To start a game just press the settings <span><i class="fa-solid fa-gear"></i></span> button, pick a language for the secret word and then pick the lenght.</p>
+                <p class="modal__content__instructions">Once you written the letter and pressed the <span>enter</span> you'll see something like bellow:</p>
+                <div class="modal__info__example">
+                    <div class="card card--green">p</div>
+                    <div class="card card--gray">a</div>
+                    <div class="card card--yellow">l</div>
+                    <div class="card card--green">e</div>
+                </div>
             </div>
         </section>
         <main class="main">
