@@ -254,6 +254,18 @@ button:active {
     font-size: 2rem;
 }
 
+.card--green{
+    background-color: var(--cards-green);
+}
+
+.card--gray{
+    background-color: var(--cards-gray);
+}
+
+.card--yellow{
+    background-color: var(--cards-yellow);
+}
+
 .footer {
     position: fixed;
     bottom: 0;
@@ -270,18 +282,6 @@ button:active {
     font-weight: 900;
 }
 
-.card--green{
-    background-color: var(--cards-green);
-}
-
-.card--gray{
-    background-color: var(--cards-gray);
-}
-
-.card--yellow{
-    background-color: var(--cards-yellow);
-}
-
 @media screen and (min-width: 480px) {
     .hero {
         width: 380px;
@@ -296,14 +296,6 @@ button:active {
     .main {
         width: 600px;
         margin: 56px auto 0;
-    }
-    
-    .hero {
-        width: 380px;
-    }
-
-    .hero__display__row {
-        height: calc(300px / 6);
     }
 
     .keyboard {
