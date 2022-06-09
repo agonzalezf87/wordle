@@ -23,13 +23,11 @@ const loadKeyboard = () => {
                 deleteIcon.classList.add('fa-solid', 'fa-delete-left')
                 keyboardCard.appendChild(deleteIcon)
                 keyboardCard.setAttribute('title', key)
-                keyboardCard.id = 'deleteKey'
                 keyboardCard.onclick = () => writeLetter(key)
                 keyboardRow.appendChild(keyboardCard)
             }else {
                 const cardText = document.createTextNode(key)
                 keyboardCard.appendChild(cardText)
-                if(key === 'enter') keyboardCard.id = 'enterKey'
                 keyboardCard.setAttribute('title', key)
                 keyboardCard.onclick = () => writeLetter(key)
                 keyboardRow.appendChild(keyboardCard)
@@ -54,7 +52,7 @@ const createDisplay = (length) => {
             sixLettersArray.forEach(key => gameArray.push(key))
         break
     }
-    for(let i = 0; i < length; i++){
+    for(let i = 0; i < gameArray.length; i++){
         const heroDisplayRow = document.createElement('div')
         heroDisplayRow.classList.add('hero__display__row', 'short')
         for(let j = 0; j < gameArray.length; j++){
@@ -62,7 +60,28 @@ const createDisplay = (length) => {
             displayCard.classList.add('card', 'display__card')
             heroDisplayRow.appendChild(displayCard)
         }
+        gameStarted = true
         displayGrid.appendChild(heroDisplayRow)
+    }
+}
+
+const createModal = async (type) => {
+    
+}
+
+const jsonTry = async () => {
+    try {
+        const res = await fetch('./assets/json/languages.json')
+        const data = await res.json()
+        const {en, es} = Object.keys(data)
+        
+        console.log({
+            "data": data,
+            "en": en,
+            "es": es
+        })
+    } catch (error) {
+        console.log(error)
     }
 }
 
@@ -112,21 +131,22 @@ const writeLetter = (key) => {
 
 const validateWord = () => {
     let currentRow = displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`)
-    let userWon = 0
+    let foundLetter = 0
     let gameStr = userArray.join('')
 
     for(let i = 0; i < userArray.length; i++){
         if(userArray[i] === gameArray[i]){
             currentRow.querySelector(`div:nth-child(${i+1})`).classList.add('card--green')
-            userWon++
+            foundLetter++
         }else if(gameArray.find(key => key === userArray[i])){
             currentRow.querySelector(`div:nth-child(${i+1})`).classList.add('card--yellow')
         }else{
             currentRow.querySelector(`div:nth-child(${i+1})`).classList.add('card--gray')
         }
     }
-    if(userWon === gameArray.length){
+    if(foundLetter === gameArray.length){
         alert(`You found the word! \n ${gameStr}`)
+        gameStarted = false
     }else{
         tries++
         userArray = []
@@ -135,16 +155,17 @@ const validateWord = () => {
 
 loadTitle()
 loadKeyboard()
+createDisplay(4)
 
-closeModal.onclick = () => {
+/* closeModal.onclick = () => {
     if(displayGrid.querySelectorAll('div').length > 0 || modal.classList.contains('modal__info')){
         modal.classList.add('hidden')
     }
-}
+} 
 
 btnFourLetters.onclick = () => createDisplay(4)
 btnFiveLetters.onclick = () => createDisplay(5)
 btnSixLetters.onclick = () => createDisplay(6)
 
 gameSettings.onclick = () => modal.classList.contains('hidden') ? modal.classList.remove('hidden') : console.log('Modal is active')
-gameInfo.onclick = () => modal.classList.contains('hidden') ? modal.classList.remove('hidden') : console.log('Modal is active')
+gameInfo.onclick = () => modal.classList.contains('hidden') ? modal.classList.remove('hidden') : console.log('Modal is active')*/

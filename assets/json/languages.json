@@ -1,0 +1,222 @@
+{
+    "0": 
+    {
+        "id": "en",
+        "nodes":
+        {
+            "tag": "footer",
+            "content": 
+            {
+                "tag": "section",
+                "textContent": "Made with 💚 by <span class='strong'>Antonio Gonzalez Dev</span>",
+                "classList": ["footer__text"]
+            }
+        },
+        "modals": 
+        {
+            "tag": "section",
+            "classList": ["modal"],
+            "children": 
+            {
+                "0": 
+                {
+                    "tag": "div",
+                    "classList": ["modal--close"],
+                    "textContent": "<i class='fa-solid fa-xmark'></i>"
+                },
+                "1": 
+                {
+                    "tag": "div",
+                    "classList": ["modal__title"],
+                    "textContent": "<h2>Game Settings</h2>"
+                },
+                "2": 
+                {
+                    "tag": "div",
+                    "classList": ["modal__label"],
+                    "textContent": "Game Language"
+                },
+                "3": 
+                {
+                    "tag": "div",
+                    "classList": ["modal__action"],
+                    "children":
+                    {
+                        "0": 
+                        {
+                            "tag": "button",
+                            "classList": ["modal__action__btn"],
+                            "attributes": 
+                            {
+                                "type": "button"
+                            },
+                            "textContent": "🇬🇧 English"
+                        },
+                        "1": 
+                        {
+                            "tag": "button",
+                            "classList": ["modal__action__btn"],
+                            "attributes": 
+                            {
+                                "type": "button"
+                            },
+                            "textContent": "🇲🇽 Español"
+                        }
+                    }
+                },
+                "4": {
+                    "tag": "div",
+                    "classList": ["modal__label"],
+                    "textContent": "Secret Word Length"
+                },
+                "5": {
+                    "tag": "div",
+                    "classList": ["modal__action"],
+                    "children": 
+                    {
+                        "0": 
+                        {
+                            "tag": "button",
+                            "classList": ["modal__action__btn"],
+                            "attributes": 
+                            {
+                                "type": "button"
+                            },
+                            "textContent": "4 Letters"
+                        },
+                        "1": 
+                        {
+                            "tag": "button",
+                            "classList": ["modal__action__btn"],
+                            "attributes": 
+                            {
+                                "type": "button"
+                            },
+                            "textContent": "5 Letters"
+                        },
+                        "2": 
+                        {
+                            "tag": "button",
+                            "classList": ["modal__action__btn"],
+                            "attributes": 
+                            {
+                                "type": "button"
+                            },
+                            "textContent": "6 Letters"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "1": 
+    {
+        "id": "es",
+        "nodes":
+        {
+            "tag": "footer",
+            "content": 
+            {
+                "tag": "section",
+                "textContent": "Hecho con 💚 por <span class='strong'>Antonio Gonzalez Dev</span>",
+                "classList": ["footer__text"]
+            }
+        },
+        "modals": 
+        {
+            "tag": "section",
+            "classList": ["modal"],
+            "children": 
+            {
+                "0": 
+                {
+                    "tag": "div",
+                    "classList": ["modal--close"],
+                    "textContent": "<i class='fa-solid fa-xmark'></i>"
+                },
+                "1": 
+                {
+                    "tag": "div",
+                    "classList": ["modal__title"],
+                    "textContent": "<h2>Opciones del Juego</h2>"
+                },
+                "2": 
+                {
+                    "tag": "div",
+                    "classList": ["modal__label"],
+                    "textContent": "Idioma del Juego"
+                },
+                "3": 
+                {
+                    "tag": "div",
+                    "classList": ["modal__action"],
+                    "children":
+                    {
+                        "0": 
+                        {
+                            "tag": "button",
+                            "classList": ["modal__action__btn"],
+                            "attributes": 
+                            {
+                                "type": "button"
+                            },
+                            "textContent": "🇬🇧 English"
+                        },
+                        "1": 
+                        {
+                            "tag": "button",
+                            "classList": ["modal__action__btn"],
+                            "attributes": 
+                            {
+                                "type": "button"
+                            },
+                            "textContent": "🇲🇽 Español"
+                        }
+                    }
+                },
+                "4": {
+                    "tag": "div",
+                    "classList": ["modal__label"],
+                    "textContent": "Longitud de Palabra Secreta"
+                },
+                "5": {
+                    "tag": "div",
+                    "classList": ["modal__action"],
+                    "children": 
+                    {
+                        "0": 
+                        {
+                            "tag": "button",
+                            "classList": ["modal__action__btn"],
+                            "attributes": 
+                            {
+                                "type": "button"
+                            },
+                            "textContent": "4 Letras"
+                        },
+                        "1": 
+                        {
+                            "tag": "button",
+                            "classList": ["modal__action__btn"],
+                            "attributes": 
+                            {
+                                "type": "button"
+                            },
+                            "textContent": "5 Letras"
+                        },
+                        "2": 
+                        {
+                            "tag": "button",
+                            "classList": ["modal__action__btn"],
+                            "attributes": 
+                            {
+                                "type": "button"
+                            },
+                            "textContent": "6 Letras"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

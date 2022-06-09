@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Vanilla JS Wordle Game</title>
+        <title>Vanilla JS Wordle</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;900&display=swap" rel="stylesheet">
@@ -31,7 +31,7 @@
             <div class="modal__action">
                 <button class="modal__action__btn" id="btnFourLetters" type="button">4 Letters</button><button class="modal__action__btn" id="btnFiveLetters" type="button">5 Letters</button><button class="modal__action__btn" id="btnSixLetters" type="button">6 Letters</button>
             </div>
-        </section> -->
+        </section>
         <section id="modal" class="modal modal__info">
             <div class="modal--close" id="closeModal">
                 <i class="fa-solid fa-xmark"></i>
@@ -40,17 +40,44 @@
                 <h2>How To Play</h2>
             </div>
             <div class="modal__info__content">
-                <p>You have to guess the hidden word in 6 tries and the color of the letters changes to show how close you are.</p>
-                <p>To start a game just press the settings <span><i class="fa-solid fa-gear"></i></span> button, pick a language for the secret word and then pick the lenght.</p>
-                <p class="modal__content__instructions">Once you written the letter and pressed the <span>enter</span> you'll see something like bellow:</p>
-                <div class="modal__info__example">
-                    <div class="card card--green">p</div>
-                    <div class="card card--gray">a</div>
-                    <div class="card card--yellow">l</div>
-                    <div class="card card--green">e</div>
+                <p> You have to guess the hidden word in 6 tries and the color of the letters changes to show how close you are.</p>
+                <p>To start the game, just enter any word, for example: </p>
+                <div class="modal__info__content--example">
+                    <div class="card card--green">g</div>
+                    <div class="card card--gray">r</div>
+                    <div class="card card--yellow">o</div>
+                    <div class="card card--gray">w</div>
                 </div>
+                <p>Where...</p>
+                <div class="modal__info__content--explanation">
+                    <div class="card card--gray">r</div> <div class="card card--gray">w</div>
+                    <div>Not part of the secret word.</div>
+                </div>
+                <div class="modal__info__content--explanation">
+                    <div class="card card--yellow">o</div>
+                    <div>Part of the word but in different spot.</div>
+                </div>
+                <div class="modal__info__content--explanation">
+                    <div class="card card--green">o</div>
+                    <div>Part of the word and in the right spot.</div>
+                </div>
+                <p>In the next tries you can try to re locate the wods that are part of the secret word:</p>
+                <div class="modal__info__content--example">
+                    <div class="card card--green">g</div>
+                    <div class="card card--green">o</div>
+                    <div class="card card--gray">n</div>
+                    <div class="card card--yellow">e</div>
+                </div>
+                <p>Until you found i!</p>
+                <div class="modal__info__content--example">
+                    <div class="card card--green">g</div>
+                    <div class="card card--green">o</div>
+                    <div class="card card--green">e</div>
+                    <div class="card card--green">s</div>
+                </div>
+                <h1>🏅</h1>
             </div>
-        </section>
+        </section> -->
         <main class="main">
             <section class="hero">
                 <nav class="hero__nav">
@@ -69,7 +96,9 @@
         <footer class="footer">
             <section class="footer__text">Made with 💚 by <span class="strong">Antonio Gonzalez Dev</span></section>
         </footer>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="./assets/js/nodes.js" type="text/javascript"></script>
+        <script src="./assets/js/dictionary.js" type="text/javascript"></script>
         <script src="./assets/js/main.js" type="text/javascript"></script>
     </body>
     </html>
