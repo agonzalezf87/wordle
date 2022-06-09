@@ -12,6 +12,9 @@ const loadTitle = () => {
 }
 
 const loadKeyboard = () => {
+    if(gameLang === 'en'){
+        keyboard[1].pop()
+    }
     keyboard.map(row => {
         const keyboardRow = document.createElement('div')
         keyboardRow.classList.add('keyboard__row')
@@ -22,13 +25,11 @@ const loadKeyboard = () => {
                 const deleteIcon = document.createElement('i')
                 deleteIcon.classList.add('fa-solid', 'fa-delete-left')
                 keyboardCard.appendChild(deleteIcon)
-                keyboardCard.setAttribute('title', key)
                 keyboardCard.onclick = () => writeLetter(key)
                 keyboardRow.appendChild(keyboardCard)
-            }else {
+            }else{
                 const cardText = document.createTextNode(key)
                 keyboardCard.appendChild(cardText)
-                keyboardCard.setAttribute('title', key)
                 keyboardCard.onclick = () => writeLetter(key)
                 keyboardRow.appendChild(keyboardCard)
             }
@@ -65,68 +66,45 @@ const createDisplay = (length) => {
     }
 }
 
-const createModal = async (type) => {
-    
-}
-
-const jsonTry = async () => {
-    try {
-        const res = await fetch('./assets/json/languages.json')
-        const data = await res.json()
-        const {en, es} = Object.keys(data)
-        
-        console.log({
-            "data": data,
-            "en": en,
-            "es": es
-        })
-    } catch (error) {
-        console.log(error)
-    }
-}
-
 const writeLetter = (key) => {
-    if(gameStarted){
-        switch (key) {
-            case 'enter':
-                // console.log(tries)
-                if(userArray.length === gameArray.length){
-                    validateWord()
-                }else{
-                    alert(`The word must have ${gameArray.length} letters!`)
-                }
-            break
-            case 'delete':
-                if(userArray.length > 0){
-                    displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = ''
-                    userArray.splice(-1)
-                }
-            break
-            default:
-                switch (gameArray.length) {
-                    case 4:
-                        if(userArray.length < 4){
-                            userArray.push(key)
-                            displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = key
-                        }
-                    break
-                    case 5:
-                        if(userArray.length < 5){
-                            userArray.push(key)
-                            displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = key
-                        }
-                    break
-                    default:
-                        if(userArray.length < 6){
-                            userArray.push(key)
-                            displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = key
-                        }
-                    break
-                }
-            break
-        }
+    switch (key) {
+        case 'enter':
+            // console.log(tries)
+            if(userArray.length === gameArray.length){
+                validateWord()
+            }else{
+                showAlert('error', `The word must have ${gameArray.length} letters!`)
+            }
+        break
+        case 'delete':
+            if(userArray.length > 0){
+                displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = ''
+                userArray.splice(-1)
+            }
+        break
+        default:
+            switch (gameArray.length) {
+                case 4:
+                    if(userArray.length < 4){
+                        userArray.push(key)
+                        displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = key
+                    }
+                break
+                case 5:
+                    if(userArray.length < 5){
+                        userArray.push(key)
+                        displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = key
+                    }
+                break
+                default:
+                    if(userArray.length < 6){
+                        userArray.push(key)
+                        displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = key
+                    }
+                break
+            }
+        break
     }
-    
 }
 
 const validateWord = () => {
@@ -145,12 +123,35 @@ const validateWord = () => {
         }
     }
     if(foundLetter === gameArray.length){
-        alert(`You found the word! \n ${gameStr}`)
-        gameStarted = false
+        showAlert('success', `You found the word! \n ${gameStr}`)
     }else{
         tries++
         userArray = []
     }
+}
+
+const showAlert = (type, message) => {
+    const body = document.querySelector('body')
+    const infoDiv = document.createElement('div')
+    const infoIcon = document.createElement('i')
+    const infMessage = document.createTextNode(message)
+    infoIcon.classList.add('fa-solid')
+    infoDiv.classList.add('info')
+    if(type === 'error'){
+        infoIcon.classList.add('fa-circle-xmark')
+        infoDiv.classList.add('info--error')
+    }else if(type === 'success'){
+        infoIcon.classList.add('fa-circle-check')
+        infoDiv.classList.add('info--success')
+    }else{
+        infoIcon.classList.add('fa-circle-exclamation')
+    }
+    infoDiv.appendChild(infoIcon)
+    infoDiv.appendChild(infMessage)
+
+    body.appendChild(infoDiv)
+    
+    window.setTimeout(() => infoDiv.remove(), 2000)
 }
 
 loadTitle()

@@ -11,6 +11,7 @@ let sixLettersArray = ['p','l','a','t','z','i']
 let gameArray = []
 let tries = 1
 let gameStarted = false
+let gameLang = 'en'
 // let wordDimension = 6
 let userArray = []
 

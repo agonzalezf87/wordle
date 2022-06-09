@@ -16,6 +16,17 @@
 
     /* Helpers */
     --default-fontsize: 1.6rem;
+
+    /* Erorrs */
+    --error-background: #F0bbbb;
+    --error-font: #8d0505;
+
+    /* Alert */
+    --alert-background: #d9e8f7;
+
+    /* Success */
+    --success-background: #dde8e0;
+    --success-font: #042e00;
 }
 
 /* Normalization */
@@ -134,7 +145,7 @@ button:active {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     height: calc(100vh - 88px);
     margin-top: 56px;
 }
@@ -399,6 +410,38 @@ button:active {
     padding: 4px;
 }
 
+/* Alerts */
+
+.info {
+    position: fixed;
+    width: 100%;
+    min-height: 32px;
+    max-height: max-content;
+    left: 0;
+    top: 56px;
+    background-color: var(--alert-background);
+    color: var(--site-color5);
+    text-align: center;
+    text-shadow: -1px 1px 1px #aaa;
+    padding: 4px 0;
+    font-weight: 600;
+}
+
+.info > i {
+    font-size: 1.8rem;
+    margin-right: 10px;
+}
+
+.info--error{
+    background-color: var(--error-background);
+    color: var(--error-font);
+}
+
+.info--success{
+    background-color: var(--success-background);
+    color: var(--success-font);
+}
+
 /* Element modificators for JS actions */
 
 .hidden {
@@ -408,8 +451,6 @@ button:active {
 .blurry {
     opacity: .2;
 }
-
-
 
 @media screen and (min-width: 480px) {
     .hero {
@@ -427,7 +468,7 @@ button:active {
         width: 600px;
         margin: 56px auto 0;
     }
-
+    
     .modal {
         width: 550px;
         left: calc(calc(100% - 550px) / 2);
@@ -443,6 +484,11 @@ button:active {
 
     .modal__info__content {
         font-size: var(--default-fontsize)
+    }
+
+    .info {
+        width: 600px;
+        left: calc(calc(100% - 600px) / 2)
     }
 }
 
