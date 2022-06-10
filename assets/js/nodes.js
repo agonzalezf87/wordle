@@ -10,9 +10,8 @@ let fiveLettersArray = ['v','o','l','a','r']
 let sixLettersArray = ['p','l','a','t','z','i']
 let gameArray = []
 let tries = 1
-let gameStarted = false
+let gameFinished = false
 let gameLang = 'en'
-// let wordDimension = 6
 let userArray = []
 
 const $ = (id) => document.querySelector(id)
@@ -22,10 +21,20 @@ const modal = $('#modal')
 const closeModal = $('#closeModal')
 const langEsp = $('#langEsp')
 const langEng = $('#langEng')
-/* const btnFourLetters = $('#btnFourLetters')
-const btnFiveLetters = $('#btnFiveLetters')
-const btnSixLetters = $('#btnSixLetters') */
 const displayGrid = $('#displayGrid')
 const keyboardSection = $('#keyboard')
 const gameSettings = $('#gameSettings')
 const gameInfo = $('#gameInfo')
+const footerText = $('#footerText')
+
+/* Languages helpers */
+
+let footers = [
+    'Made with 💚 by <span class="strong">Antonio Gonzalez Dev</span>',
+    'Hecho con 💚 por <span class="strong">Antonio Gonzalez Dev</span>'
+]
+
+/* Axios helpers */
+const API_URL = 'https://od-api.oxforddictionaries.com/api/v2'
+const API_ID = '162f38c1'
+const API_KEY = '2ffcff682b4bb9445ee084b6dfb621e1'

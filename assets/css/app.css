@@ -166,11 +166,11 @@ button:active {
 .hero__nav__options {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
 }
 
-.hero__nav__options .hero__nav__button:last-child{
-    margin-left: 8px;
+.hero__nav__options:last-child {
+    justify-content: flex-end;
 }
 
 .hero__nav__button {
@@ -183,6 +183,10 @@ button:active {
     font-size: 1.8rem;
     line-height: 2rem;
     cursor: pointer;
+}
+
+.hero__nav__button:not(div:first-child) {
+    margin-left: 5px;
 }
 
 .hero__nav__button:active {
@@ -208,10 +212,6 @@ button:active {
     display: flex;
     justify-content: center;
     margin: 2px 0;
-}
-
-.hero__display__row.short {
-    width: 75%;
 }
 
 .display__card {
@@ -240,25 +240,27 @@ button:active {
     column-gap: 2px;
 }
 
-.keyboard__card {
+.keyboard__btn {
     cursor: pointer;
     font-size: 1.8rem;
     padding: 6px;
     border-radius: 8px;
     flex: 1 1;
-    user-select: none;
+    border: none;
+    border: 2px solid transparent;
 }
 
-.keyboard__card:hover {
+.keyboard__btn:hover {
     background-color: var(--site-color2-hover);
+    border: 2px solid transparent;
 }
 
-.keyboard__card:active {
+.keyboard__btn:active {
     background-color: transparent;
     border: 2px solid var(--site-color2-hover);
 }
 
-.keyboard__card i {
+.keyboard__btn i {
     font-size: 2rem;
 }
 
@@ -414,13 +416,13 @@ button:active {
 
 .info {
     position: fixed;
-    width: 100%;
-    min-height: 32px;
+    width: 250px;
+    min-height: 64px;
     max-height: max-content;
-    left: 0;
+    left: calc(calc(100% - 250px) / 2);
     top: 56px;
-    background-color: var(--alert-background);
-    color: var(--site-color5);
+    background-color: var(--site-color6);
+    color: var(--cards-yellow);
     text-align: center;
     text-shadow: -1px 1px 1px #aaa;
     padding: 4px 0;
@@ -432,7 +434,7 @@ button:active {
     margin-right: 10px;
 }
 
-.info--error{
+/* .info--error{
     background-color: var(--error-background);
     color: var(--error-font);
 }
@@ -440,7 +442,7 @@ button:active {
 .info--success{
     background-color: var(--success-background);
     color: var(--success-font);
-}
+} */
 
 /* Element modificators for JS actions */
 
