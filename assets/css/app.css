@@ -17,7 +17,7 @@
     /* Helpers */
     --default-fontsize: 1.6rem;
 
-    /* Erorrs */
+    /* Errors */
     --error-background: #F0bbbb;
     --error-font: #8d0505;
 
@@ -299,7 +299,7 @@ button:active {
     top: 56px;
     left: 0;
     z-index: 100;
-    padding: 56px 15px;
+    padding: 24px 15px;
     display: grid;
     grid-template-columns: repeat(2, 50%);
     grid-auto-rows: max-content;
@@ -333,33 +333,7 @@ button:active {
     margin-bottom: 12px;
     grid-column: 1 / 3;
 }
-
-.modal__title > h3 {
-    margin-bottom: 0;
-    text-shadow: 1px 1px 3px var(--site-color6);
-}
-
-.modal__label {
-    padding-top: 6px;
-    padding-left: 15px;
-    font-size: 2rem;
-}
-
-.modal__action {
-    text-align: right;
-}
-
-.modal__action__btn {
-    margin: 0 2px 2px;
-    background-color: var(--cards-gray);
-    box-shadow: 1px 1px 3px var(--site-color6);
-}
-
-.modal__info {
-    padding: 24px 15px;
-}
-
-.modal__info__content {
+.modal__content {
     grid-column: 1 / 3;
     text-align: center;
     margin-bottom: 10px;
@@ -367,45 +341,45 @@ button:active {
     line-height: 2rem;
 }
 
-.modal__info__content .card {
+.modal__content .card {
     text-transform: uppercase;
     margin: 0 5px;
     border: none;
 }
 
-.modal__info__content span {
+.modal__content span {
     font-weight: 600;
     text-decoration: underline;
 }
 
-.modal__info__content span i {
+.modal__content span i {
     color: var(--site-color3);
     text-shadow: 1px 1px 1.5px #999;
     margin-right: 3px;
 }
 
-.modal__info__content--example, .modal__info__content--explanation {
+.modal__content--example, .modal__content--explanation {
     display: flex;
     justify-content: center;
     margin: 5px 0;
 }
 
-.modal__info__content--example .card {
+.modal__content--example .card {
     width: 36px;
     height: 36px;
     font-size: 2.4rem;
     padding: 6px;
 }
 
-.modal__info__content p {
+.modal__content p {
     width: 100%;
 }
 
-.modal__info__content--explanation div:not(.card) {
+.modal__content--explanation div:not(.card) {
     padding-top: 6px;
 }
 
-.modal__info__content--explanation .card {
+.modal__content--explanation .card {
     width: 30px;
     height: 30px;
     font-size: 2.2rem;

@@ -143,7 +143,6 @@ const validateWord = () => {
 }
 
 const showAlert = (type, message) => {
-    const body = document.querySelector('body')
     const infoDiv = document.createElement('div')
     const infoIcon = document.createElement('i')
     const infMessage = document.createTextNode(message)
@@ -164,6 +163,32 @@ const showAlert = (type, message) => {
     body.appendChild(infoDiv)
     
     // window.setTimeout(() => infoDiv.remove(), 2000)
+}
+
+const callHowTo = () => {
+    const howTo = document.createElement('section')
+    const close = document.createElement('div')
+    const title = document.createElement('div')
+    const content = document.createElement('div')
+    howTo.classList.add('modal')
+    close.classList.add('modal--close')
+    title.classList.add('modal__title')
+    content.classList.add('modal__content')
+    
+    switch(gameLang){
+        case 'en':
+            title.innerHTML = `<h2>${howToLangs.en.title}</h2>`
+            content.innerHTML = howToLangs.en.content
+        break
+        case 'es':    
+                title.innerHTML = `<h2>${howToLangs.es.title}</h2>`
+                content.innerHTML = howToLangs.es.content
+        break
+    }
+    close.innerHTML = '<i class="fa-solid fa-xmark"></i>'
+    close.onclick = () => howTo.remove()
+    howTo.append(close, title, content)
+    body.appendChild(howTo)
 }
 
 const changeLanguage = (lang) => {
@@ -190,3 +215,4 @@ createDisplay(4)
 
 langEng.onclick = () => changeLanguage('en')
 langEsp.onclick = () => changeLanguage('es')
+gameInfo.onclick = () => callHowTo()
