@@ -10,23 +10,15 @@
     --site-color5: #131159;
     --site-color6: #21023D;
     --site-white: #fff;
-    --cards-yellow: #f0db4f; 
+    --cards-yellow: #f0db4f;
     --cards-green: #00b83a;
     --cards-gray: #4e4e4e;
 
     /* Helpers */
     --default-fontsize: 1.6rem;
 
-    /* Errors */
-    --error-background: #F0bbbb;
-    --error-font: #8d0505;
-
-    /* Alert */
-    --alert-background: #d9e8f7;
-
-    /* Success */
-    --success-background: #dde8e0;
-    --success-font: #042e00;
+    /* Alerts */
+    --error-color: #7c0606;
 }
 
 /* Normalization */
@@ -260,6 +252,10 @@ button:active {
     border: 2px solid var(--site-color2-hover);
 }
 
+.not, .not:hover, .not:active {
+    background-color: var(--cards-gray);
+}
+
 .keyboard__btn i {
     font-size: 2rem;
 }
@@ -291,6 +287,8 @@ button:active {
 .footer__text .strong {
     font-weight: 900;
 }
+
+/* How To */
 
 .modal {
     width: 100%;
@@ -388,35 +386,55 @@ button:active {
 
 /* Alerts */
 
-.info {
+.alert {
     position: fixed;
-    width: 250px;
-    min-height: 64px;
-    max-height: max-content;
-    left: calc(calc(100% - 250px) / 2);
-    top: 56px;
+    z-index: 101;
+    width: 300px;
+    height: 120px;
+    left: calc(calc(100% - 300px) / 2);
+    top: calc(calc(100% - 120px) / 2);
+    display: flex;
+    flex-wrap: nowrap;
     background-color: var(--site-color6);
+    border-radius: 25px;
+    box-shadow: 1px 2px 5px var(--site-color2);
+    color: var(--site-white);
+    padding: 10px;
+}
+
+.alert__icon {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     color: var(--cards-yellow);
-    text-align: center;
-    text-shadow: -1px 1px 1px #aaa;
-    padding: 4px 0;
-    font-weight: 600;
 }
 
-.info > i {
-    font-size: 1.8rem;
-    margin-right: 10px;
+.alert__icon i {
+    font-size: 2.6rem;
 }
 
-/* .info--error{
-    background-color: var(--error-background);
-    color: var(--error-font);
+.icon--error {
+    color: var(--error-color);
 }
 
-.info--success{
-    background-color: var(--success-background);
-    color: var(--success-font);
-} */
+.icon--success {
+    color: var(--cards-green);
+}
+
+.alert__message {
+    width: 85%;
+    display: flex;
+    align-items: center;
+}
+
+.alert__message p {
+    width: 100%;
+    font-size: 1.4rem;
+    text-align: justify;
+    padding-left: 10px;
+}
 
 /* Element modificators for JS actions */
 
@@ -425,7 +443,7 @@ button:active {
 }
 
 .blurry {
-    opacity: .2;
+    opacity: .25;
 }
 
 @media screen and (min-width: 480px) {
@@ -437,6 +455,19 @@ button:active {
         height: calc(300px / 6);
     }
 
+    .info {
+        width: 420px;
+        left: calc(calc(100% - 420px) / 2);
+    }
+
+    .info__icon i {
+        font-size: 3.2rem;
+    }
+
+    .info__message p {
+        padding-left: 20px;
+        font-size: var(--default-fontsize);
+    }
 }
 
 @media screen and (min-width: 600px) {
@@ -460,11 +491,6 @@ button:active {
 
     .modal__info__content {
         font-size: var(--default-fontsize)
-    }
-
-    .info {
-        width: 600px;
-        left: calc(calc(100% - 600px) / 2)
     }
 }
 

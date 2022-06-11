@@ -17,15 +17,13 @@ let userArray = []
 const $ = (id) => document.querySelector(id)
 
 const body = $('body')
+const main = $('main')
 const headerTitle = $('#headerTitle')
-const modal = $('#modal')
-const closeModal = $('#closeModal')
 const langEsp = $('#langEsp')
 const langEng = $('#langEng')
+const gameInfo = $('#gameInfo')
 const displayGrid = $('#displayGrid')
 const keyboardSection = $('#keyboard')
-const gameSettings = $('#gameSettings')
-const gameInfo = $('#gameInfo')
 const footerText = $('#footerText')
 
 /* Languages helpers */
@@ -51,7 +49,7 @@ const howToLangs = {
             <p>Where...</p>
             <div class="modal__content--explanation">
                 <div class="card card--gray">r</div> <div class="card card--gray">w</div>
-                <div>Not part of the secret word.</div>
+                <div>Not part of the secret word. (The keyboard letter will change to this color)</div>
             </div>
             <div class="modal__content--explanation">
                 <div class="card card--yellow">o</div>
@@ -93,7 +91,7 @@ const howToLangs = {
             <p>Dónde...</p>
             <div class="modal__content--explanation">
                 <div class="card card--gray">e</div> <div class="card card--gray">d</div>
-                <div>No forma parte de la palabra.</div>
+                <div>No forma parte de la palabra. (La letra del teclado cambiará a este color)</div>
             </div>
             <div class="modal__content--explanation">
                 <div class="card card--yellow">o</div>

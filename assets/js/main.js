@@ -49,6 +49,10 @@ const createDisplay = (length) => {
     userArray = []
     gameArray = []
     gameFinished ? gameFinished : gameFinished = false
+    
+    let buttons = keyboardSection.querySelectorAll('button')
+    buttons.forEach(button => button.classList.contains('not') ? button.classList.remove('not') : button)   
+
     switch (length) { /* This will change with dictionary load */
         case 4:
             fourLettersArray.forEach(key => gameArray.push(key))
@@ -79,10 +83,10 @@ const writeLetter = (key) => {
                 if(userArray.length === gameArray.length){
                     validateWord()
                 }else if(userArray.length < 1){
-                    gameLang === 'en' ? showAlert('error', `You have to write a ${gameArray.length} letters word`) : showAlert('error', `Tienes que escribir una palabra de ${gameArray.length} letras`)
+                    gameLang === 'en' ? showAlert('', `You have to write a ${gameArray.length} letters word`) : showAlert('', `Tienes que escribir una palabra de ${gameArray.length} letras`)
                 }
                 else{
-                    gameLang === 'en' ? showAlert('error', `The word must have ${gameArray.length} letters!`) : showAlert('error', `La palabra debe contener ${gameArray.length} letras`)
+                    gameLang === 'en' ? showAlert('error', `The word must have ${gameArray.length} letters!`) : showAlert('', `La palabra debe contener ${gameArray.length} letras`)
                 }
             }
         break
@@ -93,6 +97,8 @@ const writeLetter = (key) => {
             }
         break
         default:
+            $('button#deleteKey').disabled ? $('button#deleteKey').disabled = false : $('button#deleteKey')
+            $('button#enter') ? $('button#enter').disabled = false : $('button#enter')        
             switch (gameArray.length) {
                 case 4:
                     if(userArray.length < 4){
@@ -129,13 +135,15 @@ const validateWord = () => {
         }else if(gameArray.find(key => key === userArray[i])){
             currentRow.querySelector(`div:nth-child(${i+1})`).classList.add('card--yellow')
         }else{
+            $(`button#${userArray[i]}`).classList.contains('not') ? $(`button#${userArray[i]}`) : $(`button#${userArray[i]}`).classList.add('not')
             currentRow.querySelector(`div:nth-child(${i+1})`).classList.add('card--gray')
         }
     }
     if(foundLetter === gameArray.length){
-        const deleteKey = document.querySelector('#deleteKey')
-        deleteKey.disable = true
-        showAlert('success', `You found the word! <br> ${gameStr}`)
+        $('button#deleteKey').disabled = true
+        $('button#enter').disabled = true
+        tries = 1
+        showAlert('success', `You found the word! <br/> ${gameStr}`)
     }else{
         tries++
         userArray = []
@@ -143,29 +151,42 @@ const validateWord = () => {
 }
 
 const showAlert = (type, message) => {
-    const infoDiv = document.createElement('div')
-    const infoIcon = document.createElement('i')
-    const infMessage = document.createTextNode(message)
-    infoIcon.classList.add('fa-solid')
-    infoDiv.classList.add('info')
-    if(type === 'error'){
-        infoIcon.classList.add('fa-circle-xmark')
-        infoDiv.classList.add('info--error')
-    }else if(type === 'success'){
-        infoIcon.classList.add('fa-circle-check')
-        infoDiv.classList.add('info--success')
-    }else{
-        infoIcon.classList.add('fa-circle-exclamation')
-    }
-    infoDiv.appendChild(infoIcon)
-    infoDiv.appendChild(infMessage)
-
-    body.appendChild(infoDiv)
+    main.classList.add('blurry')
+    const divAlert = document.createElement('div')
+    const divIcon = document.createElement('div')
+    const divMessage = document.createElement('div')
+    const icon = document.createElement('i')
+    const messageParag = document.createElement('p')
+    const text = document.createTextNode(message)
+    divAlert.classList.add('alert')
+    divIcon.classList.add('alert__icon')
+    divMessage.classList.add('alert__message')
+    icon.classList.add('fa-solid')
+    messageParag.appendChild(text)
+    divMessage.appendChild(messageParag)
+    divIcon.appendChild(icon)
     
-    // window.setTimeout(() => infoDiv.remove(), 2000)
+    if(type === 'error' ) {
+        icon.classList.add('fa-circle-xmark')
+        divIcon.classList.add('icon--error')
+    }else if(type === 'success') {
+        icon.classList.add('fa-circle-check')
+        divIcon.classList.add('icon--success')
+    }else {
+        icon.classList.add('fa-circle-info')
+    }
+
+    divAlert.append(divIcon, divMessage)
+    body.appendChild(divAlert)
+    
+    window.setTimeout(() => {
+        main.classList.remove('blurry')
+        divAlert.remove()
+    }, 1500)
 }
 
 const callHowTo = () => {
+    main.classList.add('blurry')
     const howTo = document.createElement('section')
     const close = document.createElement('div')
     const title = document.createElement('div')
@@ -186,7 +207,10 @@ const callHowTo = () => {
         break
     }
     close.innerHTML = '<i class="fa-solid fa-xmark"></i>'
-    close.onclick = () => howTo.remove()
+    close.onclick = () => {
+        main.classList.remove('blurry')
+        howTo.remove()
+    }
     howTo.append(close, title, content)
     body.appendChild(howTo)
 }
