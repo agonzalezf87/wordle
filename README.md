@@ -2,7 +2,7 @@
 My abstraction of the popular game [Wordle](https://wordlegame.org/).
 
 
-## API Consumtion
+## API Consumption
 The random spanish words are lodaded from [Palabras Aleatorias](https://palabras-aleatorias-public-api.herokuapp.com/) API.
 
 English random words in construction until api_key is available for my user.
