@@ -1,68 +1,3 @@
-const keyboard = [
-    ['q','w','e','r','t','y','u','i','o','p',],
-    ['a','s','d','f','g','h','j','k','l'],
-    ['delete','z','x','c','v','b','n','m','enter']
-]
-const title = ['W','O','R','D','L','E','J','S']
-
-let fourLettersArray = ['p','i','l','a']
-let fiveLettersArray = ['v','o','l','a','r']
-let sixLettersArray = ['p','l','a','t','z','i']
-let gameArray = []
-let tries = 1
-// let wordDimension = 6
-let userArray = []
-const $ = (id) => document.querySelector(id)
-
-const displayGrid = $('#displayGrid')
-const keyboardSection = $('#keyboard')
-const headerTitle = $('#headerTitle')
-
-const createDisplay = (length) => {
-    displayGrid.innerHTML = ''
-    switch (length){
-        case 4:
-            for(let i = 0; i < 6; i++){
-                const heroDisplayRow = document.createElement('div')
-                heroDisplayRow.classList.add('hero__display__row', 'short')
-                for(let j = 0; j < 4; j++){
-                    const displayCard = document.createElement('div')
-                    displayCard.classList.add('card', 'display__card')
-                    heroDisplayRow.appendChild(displayCard)
-                }
-                displayGrid.appendChild(heroDisplayRow)
-            }
-            fourLettersArray.forEach(key => gameArray.push(key))
-        break
-        case 5:
-            for(let i = 0; i < 6; i++){
-                const heroDisplayRow = document.createElement('div')
-                heroDisplayRow.classList.add('hero__display__row')
-                for(let j = 0; j < 5; j++){
-                    const displayCard = document.createElement('div')
-                    displayCard.classList.add('card', 'display__card')
-                    heroDisplayRow.appendChild(displayCard)
-                }
-                displayGrid.appendChild(heroDisplayRow)
-            }
-            fiveLettersArray.forEach(key => gameArray.push(key))
-        break
-        default:
-            for(let i = 0; i < 6; i++){
-                const heroDisplayRow = document.createElement('div')
-                heroDisplayRow.classList.add('hero__display__row')
-                for(let j = 0; j < 6; j++){
-                    const displayCard = document.createElement('div')
-                    displayCard.classList.add('card', 'display__card')
-                    heroDisplayRow.appendChild(displayCard)
-                }
-                displayGrid.appendChild(heroDisplayRow)
-            }
-            sixLettersArray.forEach(key => gameArray.push(key))
-        break
-    }
-}
-
 const loadTitle = () => {
     title.forEach(letter => {
         const letterCard = document.createElement('div')
@@ -77,23 +12,30 @@ const loadTitle = () => {
 }
 
 const loadKeyboard = () => {
+    keyboardSection.querySelectorAll('div').forEach(el => el.remove()) 
+    if(gameLang === 'en'){
+        keyboard[1].pop()
+    }else{
+        keyboard[1].includes('ñ') ? keyboard : keyboard[1].push('ñ')
+    }
     keyboard.map(row => {
         const keyboardRow = document.createElement('div')
         keyboardRow.classList.add('keyboard__row')
         row.forEach(key => {
-            const keyboardCard = document.createElement('div')
-            keyboardCard.classList.add('card', 'keyboard__card')
+            const keyboardCard = document.createElement('button')
+            keyboardCard.classList.add('card', 'keyboard__btn')
+            keyboardCard.type = 'button'
+            keyboardCard.id = key
             if(key === 'delete'){
                 const deleteIcon = document.createElement('i')
                 deleteIcon.classList.add('fa-solid', 'fa-delete-left')
                 keyboardCard.appendChild(deleteIcon)
-                keyboardCard.setAttribute('title', key)
                 keyboardCard.onclick = () => writeLetter(key)
+                keyboardCard.id = 'deleteKey'
                 keyboardRow.appendChild(keyboardCard)
-            }else {
+            }else{
                 const cardText = document.createTextNode(key)
                 keyboardCard.appendChild(cardText)
-                keyboardCard.setAttribute('title', key)
                 keyboardCard.onclick = () => writeLetter(key)
                 keyboardRow.appendChild(keyboardCard)
             }
@@ -102,23 +44,62 @@ const loadKeyboard = () => {
     })
 }
 
+const createDisplay = (length) => {
+    /* Reseters */
+    displayGrid.innerHTML = ''
+    userArray = []
+    gameArray = []
+    gameFinished ? gameFinished : gameFinished = false
+    winnerSection.classList.add('hidden')
+    let buttons = keyboardSection.querySelectorAll('button')
+    buttons.forEach(button => button.classList.contains('not') ? button.classList.remove('not') : button)   
+
+    switch (length) { /* This will change with dictionary load */
+        case 4:
+            fourLettersArray.forEach(key => gameArray.push(key))
+        break
+        case 5:
+            fiveLettersArray.forEach(key => gameArray.push(key))
+        break
+        case 6:
+            sixLettersArray.forEach(key => gameArray.push(key))
+        break
+    }
+    for(let i = 0; i < 6; i++){
+        const heroDisplayRow = document.createElement('div')
+        heroDisplayRow.classList.add('hero__display__row')
+        for(let j = 0; j < gameArray.length; j++){
+            const displayCard = document.createElement('div')
+            displayCard.classList.add('card', 'display__card')
+            heroDisplayRow.appendChild(displayCard)
+        }
+        displayGrid.appendChild(heroDisplayRow)
+    }
+}
+
 const writeLetter = (key) => {
     switch (key) {
         case 'enter':
-            // console.log(tries)
-            if(userArray.length === gameArray.length){
-                validateWord()
-            }else{
-                alert(`The word must have ${gameArray.length} letters!`)
+            if(gameFinished === false){
+                if(userArray.length === gameArray.length){
+                    validateWord()
+                }else if(userArray.length < 1){
+                    gameLang === 'en' ? showAlert('', `You have to write a ${gameArray.length} letters word`) : showAlert('', `Tienes que escribir una palabra de ${gameArray.length} letras`)
+                }
+                else{
+                    gameLang === 'en' ? showAlert('error', `The word must have ${gameArray.length} letters!`) : showAlert('', `La palabra debe contener ${gameArray.length} letras`)
+                }
             }
         break
         case 'delete':
-            if(userArray.length > 0){
+            if(userArray.length > 0 && gameFinished === false){
                 displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = ''
                 userArray.splice(-1)
             }
         break
         default:
+            $('button#deleteKey').disabled ? $('button#deleteKey').disabled = false : $('button#deleteKey')
+            $('button#enter') ? $('button#enter').disabled = false : $('button#enter')        
             switch (gameArray.length) {
                 case 4:
                     if(userArray.length < 4){
@@ -145,27 +126,164 @@ const writeLetter = (key) => {
 
 const validateWord = () => {
     let currentRow = displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`)
-    let userWon = 0
-    let gameStr = userArray.join('')
+    let foundLetter = 0
+    let usrStr = userArray.join('')
+    let gameStr = gameArray.join('')
 
     for(let i = 0; i < userArray.length; i++){
         if(userArray[i] === gameArray[i]){
             currentRow.querySelector(`div:nth-child(${i+1})`).classList.add('card--green')
-            userWon++
+            foundLetter++
         }else if(gameArray.find(key => key === userArray[i])){
             currentRow.querySelector(`div:nth-child(${i+1})`).classList.add('card--yellow')
         }else{
+            $(`button#${userArray[i]}`).classList.contains('not') ? $(`button#${userArray[i]}`) : $(`button#${userArray[i]}`).classList.add('not')
             currentRow.querySelector(`div:nth-child(${i+1})`).classList.add('card--gray')
         }
     }
-    if(userWon === gameArray.length){
-        alert(`You found the word! \n ${gameStr}`)
-    }else{
+    if(usrStr === gameStr){
+        $('button#deleteKey').disabled = true
+        $('button#enter').disabled = true
+        tries = 1
+        winner(usrStr)
+    }else if(usrStr !== gameStr && tries < 6){
         tries++
         userArray = []
+    }else if(usrStr !== gameStr && tries === 6){
+        $('button#deleteKey').disabled = true
+        $('button#enter').disabled = true
+        gameLang === 'en' ? showAlert('lost',`You've lost 🥲`) : alert('lost',`Haz perdido 🥲`)
+    }
+}
+
+const winner = (word) => {
+    winnerSection.classList.remove('hidden')
+
+    const modal = document.createElement('div')
+    const close = document.createElement('div')
+    const title = document.createElement('div')
+    const content = document.createElement('div')
+    const icon = document.createElement('i')
+    const header = document.createElement('h2')
+    const paragraph = document.createElement('p')
+    const text = document.createTextNode(`👉 ${word} 👈`)
+    
+    modal.classList.add('modal', 'modal--winner')
+    close.classList.add('modal--close')
+    title.classList.add('modal__title')
+    content.classList.add('modal__content')
+    icon.classList.add('fa-solid', 'fa-xmark')
+
+    switch (gameLang){
+        case 'en':
+            winnerSection.innerHTML = `<div>🏅 You won! 🏅</div>`
+            header.innerHTML = `🎊 You've Found The Word! 🎊`
+        break
+        case 'es':
+            winnerSection.innerHTML = `<div>🏅 ¡Haz Ganado! 🏅</div>`
+            header.innerHTML = `🎊 ¡ Encontraste la Palabra! 🎊`
+        break
+    }
+
+    paragraph.appendChild(text)
+    
+    close.appendChild(icon)
+    title.appendChild(header)
+    content.appendChild(paragraph)
+
+    modal.append(close, title, content)
+    body.appendChild(modal)
+
+    close.onclick = () => modal.remove()
+}
+
+const showAlert = (type, message) => {
+    main.classList.add('blurry')
+    const divAlert = document.createElement('div')
+    const divIcon = document.createElement('div')
+    const divMessage = document.createElement('div')
+    const icon = document.createElement('i')
+    const messageParag = document.createElement('p')
+    const text = document.createTextNode(message)
+    divAlert.classList.add('alert')
+    divIcon.classList.add('alert__icon')
+    divMessage.classList.add('alert__message')
+    icon.classList.add('fa-solid')
+    messageParag.appendChild(text)
+    divMessage.appendChild(messageParag)
+    divIcon.appendChild(icon)
+    
+    if(type === 'error' ) {
+        icon.classList.add('fa-circle-xmark')
+        divIcon.classList.add('icon--error')
+    }else if(type === 'success') {
+        icon.classList.add('fa-circle-check')
+        divIcon.classList.add('icon--success')
+    }else {
+        icon.classList.add('fa-circle-info')
+    }
+
+    divAlert.append(divIcon, divMessage)
+    body.appendChild(divAlert)
+    
+    window.setTimeout(() => {
+        main.classList.remove('blurry')
+        divAlert.remove()
+    }, 2200)
+}
+
+const callHowTo = () => {
+    main.classList.add('blurry')
+    const howTo = document.createElement('section')
+    const close = document.createElement('div')
+    const title = document.createElement('div')
+    const content = document.createElement('div')
+    howTo.classList.add('modal')
+    close.classList.add('modal--close')
+    title.classList.add('modal__title')
+    content.classList.add('modal__content')
+    
+    switch(gameLang){
+        case 'en':
+            title.innerHTML = `<h2>${howToLangs.en.title}</h2>`
+            content.innerHTML = howToLangs.en.content
+        break
+        case 'es':    
+                title.innerHTML = `<h2>${howToLangs.es.title}</h2>`
+                content.innerHTML = howToLangs.es.content
+        break
+    }
+    close.innerHTML = '<i class="fa-solid fa-xmark"></i>'
+    close.onclick = () => {
+        main.classList.remove('blurry')
+        howTo.remove()
+    }
+    howTo.append(close, title, content)
+    body.appendChild(howTo)
+}
+
+const changeLanguage = (lang) => {
+    if(lang === gameLang){
+        loadKeyboard()
+    }else{
+        switch (lang){
+            case 'es':
+                gameLang = 'es'
+                footerText.innerHTML = footers[1]
+            break
+            case 'en':
+                gameLang = 'en'
+                footerText.innerHTML = footers[0]
+            break
+        }
+        loadKeyboard()
     }
 }
 
 loadTitle()
-createDisplay()
 loadKeyboard()
+createDisplay(4)
+
+langEng.onclick = () => changeLanguage('en')
+langEsp.onclick = () => changeLanguage('es')
+gameInfo.onclick = () => callHowTo()

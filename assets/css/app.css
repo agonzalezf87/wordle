@@ -7,15 +7,19 @@
     --site-color2-hover: rgba(99, 38, 140, .4);
     --site-color3: #6732D9;
     --site-color4: #3321A6;
+    --site-color4-hover: rgba(51, 33, 166, .6);
     --site-color5: #131159;
     --site-color6: #21023D;
     --site-white: #fff;
-    --cards-yellow: #f0db4f; 
+    --cards-yellow: #f0db4f;
     --cards-green: #00b83a;
     --cards-gray: #4e4e4e;
 
     /* Helpers */
     --default-fontsize: 1.6rem;
+
+    /* Alerts */
+    --error-color: #7c0606;
 }
 
 /* Normalization */
@@ -134,7 +138,7 @@ button:active {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     height: calc(100vh - 88px);
     margin-top: 56px;
 }
@@ -152,17 +156,15 @@ button:active {
     padding: 0 5px;
 }
 
-.hero__nav__language, .hero__nav__options {
-    width: 50%;
-    display: flex;
-}
-
 .hero__nav__options {
-    justify-content: flex-end;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
 }
 
-.hero__nav__options .hero__nav__button:last-child{
-    margin-left: 8px;
+.hero__nav__options:last-child {
+    justify-content: flex-end;
+    padding-right: 5px;
 }
 
 .hero__nav__button {
@@ -175,6 +177,10 @@ button:active {
     font-size: 1.8rem;
     line-height: 2rem;
     cursor: pointer;
+}
+
+.hero__nav__button:not(div:first-child) {
+    margin-left: 5px;
 }
 
 .hero__nav__button:active {
@@ -202,8 +208,12 @@ button:active {
     margin: 2px 0;
 }
 
-.hero__display__row.short {
-    width: 75%;
+.hero__winner {
+    background-color: var(--cards-green);
+    padding: 5px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px var(--cards-green);
+    text-shadow: 0px 1px 1px black;
 }
 
 .display__card {
@@ -232,25 +242,31 @@ button:active {
     column-gap: 2px;
 }
 
-.keyboard__card {
+.keyboard__btn {
     cursor: pointer;
     font-size: 1.8rem;
     padding: 6px;
     border-radius: 8px;
     flex: 1 1;
-    user-select: none;
+    border: none;
+    border: 2px solid transparent;
 }
 
-.keyboard__card:hover {
+.keyboard__btn:hover {
     background-color: var(--site-color2-hover);
+    border: 2px solid transparent;
 }
 
-.keyboard__card:active {
+.keyboard__btn:active {
     background-color: transparent;
     border: 2px solid var(--site-color2-hover);
 }
 
-.keyboard__card i {
+.not, .not:hover, .not:active {
+    background-color: var(--cards-gray);
+}
+
+.keyboard__btn i {
     font-size: 2rem;
 }
 
@@ -282,6 +298,194 @@ button:active {
     font-weight: 900;
 }
 
+/* How To Modal */
+
+.modal {
+    width: 100%;
+    height: max-content;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    z-index: 100;
+    padding: 24px 15px;
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-auto-rows: max-content;
+    row-gap: 5px;
+    background-color: var(--site-color5);
+    text-shadow: 1px 1px 1px var(--site-color6);
+    border-radius: 15px;
+}
+
+.modal--close {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    font-size: 2.8rem;
+    line-height: 3rem;
+    padding-top: 2px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    cursor: pointer;
+}
+
+.modal--close:active {
+    color: var(--cards-gray);
+}
+
+.modal__title {
+    width: 100%;
+    text-align: center;
+    grid-column: 1 / 3;
+}
+.modal__content {
+    grid-column: 1 / 3;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+    line-height: 2rem;
+}
+
+.modal__content .card {
+    width: 28px;
+    height: 28px;
+    font-size: 2rem;
+    padding: 2px;
+    text-transform: uppercase;
+    margin: 0 5px;
+    border: none;
+}
+
+.modal__content span {
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.modal__content span i {
+    color: var(--site-color3);
+    text-shadow: 1px 1px 1.5px #999;
+    margin-right: 3px;
+}
+
+.modal__content--example, .modal__content--explanation {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.modal__content--explanation div:not(div.card){
+    width: 65%;
+}
+
+.modal__content p {
+    width: 100%;
+}
+
+.modal__content a {
+    font-size: 1.4rem;
+    margin: 0 5px;
+    color: var(--site-white);
+    background-color: var(--site-color4);
+    border: 2px solid transparent;
+    padding: 5px 8px;
+    border-radius: 25px;
+}
+
+.modal__content a:hover {
+    background-color: var(--site-color4-hover);
+}
+
+.modal__content a:active {
+    background-color: var(--site-color4-hover);
+    border: 2px solid var(--site-color4);
+    box-shadow: 1px 1px 2px var(--site-color1);
+}
+
+/* Winner modal */
+
+.modal--winner {
+    width: 300px;
+    height: 180px;
+    left: calc(calc(100% - 300px) / 2);
+    top: calc(calc(100% - 180px) / 2);
+    padding-top: 45px;
+}
+
+.modal--winner .modal__title, .modal--winner .modal__content{
+    grid-column: 1 / 3;
+    place-self: center;
+}
+
+.modal--winner .modal__content p {
+    font-size: 2.4rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* Alerts */
+
+.alert {
+    position: fixed;
+    z-index: 101;
+    width: 300px;
+    height: 120px;
+    left: calc(calc(100% - 300px) / 2);
+    top: calc(calc(100% - 120px) / 2);
+    display: flex;
+    flex-wrap: nowrap;
+    background-color: var(--site-color6);
+    border-radius: 25px;
+    box-shadow: 1px 2px 5px var(--site-color2);
+    color: var(--site-white);
+    padding: 10px;
+}
+
+.alert__icon {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--cards-yellow);
+}
+
+.alert__icon i {
+    font-size: 2.6rem;
+}
+
+.icon--error {
+    color: var(--error-color);
+}
+
+.icon--success {
+    color: var(--cards-green);
+}
+
+.alert__message {
+    width: 85%;
+    display: flex;
+    align-items: center;
+}
+
+.alert__message p {
+    width: 100%;
+    font-size: 1.4rem;
+    text-align: justify;
+    padding-left: 10px;
+}
+
+/* Element modificators for JS actions */
+
+.hidden {
+    display: none;
+}
+
+.blurry {
+    opacity: .25;
+}
+
 @media screen and (min-width: 480px) {
     .hero {
         width: 380px;
@@ -290,6 +494,20 @@ button:active {
     .hero__display__row {
         height: calc(300px / 6);
     }
+
+    .info {
+        width: 420px;
+        left: calc(calc(100% - 420px) / 2);
+    }
+
+    .info__icon i {
+        font-size: 3.2rem;
+    }
+
+    .info__message p {
+        padding-left: 20px;
+        font-size: var(--default-fontsize);
+    }
 }
 
 @media screen and (min-width: 600px) {
@@ -297,9 +515,22 @@ button:active {
         width: 600px;
         margin: 56px auto 0;
     }
+    
+    .modal {
+        width: 550px;
+        left: calc(calc(100% - 550px) / 2);
+    }
+
+    .modal__action__btn {
+        margin: 0 2px;
+    }
 
     .keyboard {
         width: 550px;
+    }
+
+    .modal__info__content {
+        font-size: var(--default-fontsize)
     }
 }
 
