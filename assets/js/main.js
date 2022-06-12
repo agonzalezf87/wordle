@@ -14,7 +14,7 @@ const loadTitle = () => {
 const loadKeyboard = () => {
     keyboardSection.querySelectorAll('div').forEach(el => el.remove()) 
     if(gameLang === 'en'){
-        keyboard[1].pop()
+        keyboard[1].includes('ñ') ? keyboard[1].pop() : keyboard
     }else{
         keyboard[1].includes('ñ') ? keyboard : keyboard[1].push('ñ')
     }
@@ -46,29 +46,28 @@ const loadKeyboard = () => {
 
 const createDisplay = (length) => {
     /* Reseters */
+    gameLength = length
     displayGrid.innerHTML = ''
     userArray = []
-    gameArray = []
     gameFinished ? gameFinished : gameFinished = false
     winnerSection.classList.add('hidden')
     let buttons = keyboardSection.querySelectorAll('button')
-    buttons.forEach(button => button.classList.contains('not') ? button.classList.remove('not') : button)   
-
-    switch (length) { /* This will change with dictionary load */
-        case 4:
-            fourLettersArray.forEach(key => gameArray.push(key))
+    buttons.forEach(button => button.classList.contains('not') ? button.classList.remove('not') : button)
+    
+    switch (gameLang) {
+        case 'en': 
+            gameArray = []
+            length === 4 ? fourLettersArray.forEach(key => gameArray.push(key)) : length === 5 ? fiveLettersArray.forEach(key => gameArray.push(key)) : sixLettersArray.forEach(key => gameArray.push(key))
         break
-        case 5:
-            fiveLettersArray.forEach(key => gameArray.push(key))
-        break
-        case 6:
-            sixLettersArray.forEach(key => gameArray.push(key))
+        case 'es':
+            gameArray = []
+            randomEsWord(length)
         break
     }
     for(let i = 0; i < 6; i++){
         const heroDisplayRow = document.createElement('div')
         heroDisplayRow.classList.add('hero__display__row')
-        for(let j = 0; j < gameArray.length; j++){
+        for(let j = 0; j < length; j++){
             const displayCard = document.createElement('div')
             displayCard.classList.add('card', 'display__card')
             heroDisplayRow.appendChild(displayCard)
@@ -82,12 +81,12 @@ const writeLetter = (key) => {
         case 'enter':
             if(gameFinished === false){
                 if(userArray.length === gameArray.length){
-                    validateWord()
+                    window.setTimeout(validateWord(), 2500)
                 }else if(userArray.length < 1){
-                    gameLang === 'en' ? showAlert('', `You have to write a ${gameArray.length} letters word`) : showAlert('', `Tienes que escribir una palabra de ${gameArray.length} letras`)
+                    gameLang === 'en' ? showAlert('', `You have to write a ${gameArray.length} letters word`, 2500) : showAlert('', `Tienes que escribir una palabra de ${gameArray.length} letras`, 2500)
                 }
                 else{
-                    gameLang === 'en' ? showAlert('error', `The word must have ${gameArray.length} letters!`) : showAlert('', `La palabra debe contener ${gameArray.length} letras`)
+                    gameLang === 'en' ? showAlert('error', `The word must have ${gameArray.length} letters!`, 2500) : showAlert('', `La palabra debe contener ${gameArray.length} letras`, 2500)
                 }
             }
         break
@@ -113,7 +112,7 @@ const writeLetter = (key) => {
                         displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = key
                     }
                 break
-                default:
+                case 6:
                     if(userArray.length < 6){
                         userArray.push(key)
                         displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`).querySelector(`div:nth-child(${userArray.length})`).textContent = key
@@ -141,6 +140,7 @@ const validateWord = () => {
             currentRow.querySelector(`div:nth-child(${i+1})`).classList.add('card--gray')
         }
     }
+    
     if(usrStr === gameStr){
         $('button#deleteKey').disabled = true
         $('button#enter').disabled = true
@@ -152,7 +152,7 @@ const validateWord = () => {
     }else if(usrStr !== gameStr && tries === 6){
         $('button#deleteKey').disabled = true
         $('button#enter').disabled = true
-        gameLang === 'en' ? showAlert('lost',`You've lost 🥲`) : alert('lost',`Haz perdido 🥲`)
+        gameLang === 'en' ? showAlert('lost',`The word was ${gameStr}. You've lost 🥲`, 2500) : showAlert('lost',`La palabra era ${gameStr}. Haz perdido 🥲`, 2500)
     }
 }
 
@@ -197,7 +197,7 @@ const winner = (word) => {
     close.onclick = () => modal.remove()
 }
 
-const showAlert = (type, message) => {
+const showAlert = (type, message, wait) => {
     main.classList.add('blurry')
     const divAlert = document.createElement('div')
     const divIcon = document.createElement('div')
@@ -229,7 +229,7 @@ const showAlert = (type, message) => {
     window.setTimeout(() => {
         main.classList.remove('blurry')
         divAlert.remove()
-    }, 2200)
+    }, wait)
 }
 
 const callHowTo = () => {
@@ -262,27 +262,16 @@ const callHowTo = () => {
     body.appendChild(howTo)
 }
 
-const changeLanguage = (lang) => {
-    if(lang === gameLang){
-        loadKeyboard()
-    }else{
-        switch (lang){
-            case 'es':
-                gameLang = 'es'
-                footerText.innerHTML = footers[1]
-            break
-            case 'en':
-                gameLang = 'en'
-                footerText.innerHTML = footers[0]
-            break
-        }
-        loadKeyboard()
-    }
+const changeLanguage = (lang) => {  
+    lang === 'en' ? footerText.innerHTML = footers[0] : footerText.innerHTML = footers[1]
+    gameLang = lang
+    loadKeyboard()
+    createDisplay(gameLength)
 }
 
 loadTitle()
 loadKeyboard()
-createDisplay(4)
+createDisplay(gameLength)
 
 langEng.onclick = () => changeLanguage('en')
 langEsp.onclick = () => changeLanguage('es')
