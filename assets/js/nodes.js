@@ -23,6 +23,7 @@ const langEsp = $('#langEsp')
 const langEng = $('#langEng')
 const gameInfo = $('#gameInfo')
 const displayGrid = $('#displayGrid')
+const winnerSection = $('#winnerSection')
 const keyboardSection = $('#keyboard')
 const footerText = $('#footerText')
 
@@ -74,6 +75,9 @@ const howToLangs = {
                 <div class="card card--green">s</div>
             </div>
             <h1>🏅</h1>
+            <div>
+                
+            </div>
         `
     },
     es:

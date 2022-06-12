@@ -45,11 +45,12 @@ const loadKeyboard = () => {
 }
 
 const createDisplay = (length) => {
+    /* Reseters */
     displayGrid.innerHTML = ''
     userArray = []
     gameArray = []
     gameFinished ? gameFinished : gameFinished = false
-    
+    winnerSection.classList.add('hidden')
     let buttons = keyboardSection.querySelectorAll('button')
     buttons.forEach(button => button.classList.contains('not') ? button.classList.remove('not') : button)   
 
@@ -64,7 +65,7 @@ const createDisplay = (length) => {
             sixLettersArray.forEach(key => gameArray.push(key))
         break
     }
-    for(let i = 0; i < gameArray.length; i++){
+    for(let i = 0; i < 6; i++){
         const heroDisplayRow = document.createElement('div')
         heroDisplayRow.classList.add('hero__display__row')
         for(let j = 0; j < gameArray.length; j++){
@@ -126,7 +127,8 @@ const writeLetter = (key) => {
 const validateWord = () => {
     let currentRow = displayGrid.querySelector(`.hero__display__row:nth-child(${tries})`)
     let foundLetter = 0
-    let gameStr = userArray.join('')
+    let usrStr = userArray.join('')
+    let gameStr = gameArray.join('')
 
     for(let i = 0; i < userArray.length; i++){
         if(userArray[i] === gameArray[i]){
@@ -139,15 +141,60 @@ const validateWord = () => {
             currentRow.querySelector(`div:nth-child(${i+1})`).classList.add('card--gray')
         }
     }
-    if(foundLetter === gameArray.length){
+    if(usrStr === gameStr){
         $('button#deleteKey').disabled = true
         $('button#enter').disabled = true
         tries = 1
-        showAlert('success', `You found the word! <br/> ${gameStr}`)
-    }else{
+        winner(usrStr)
+    }else if(usrStr !== gameStr && tries < 6){
         tries++
         userArray = []
+    }else if(usrStr !== gameStr && tries === 6){
+        $('button#deleteKey').disabled = true
+        $('button#enter').disabled = true
+        gameLang === 'en' ? showAlert('lost',`You've lost 🥲`) : alert('lost',`Haz perdido 🥲`)
     }
+}
+
+const winner = (word) => {
+    winnerSection.classList.remove('hidden')
+
+    const modal = document.createElement('div')
+    const close = document.createElement('div')
+    const title = document.createElement('div')
+    const content = document.createElement('div')
+    const icon = document.createElement('i')
+    const header = document.createElement('h2')
+    const paragraph = document.createElement('p')
+    const text = document.createTextNode(`👉 ${word} 👈`)
+    
+    modal.classList.add('modal', 'modal--winner')
+    close.classList.add('modal--close')
+    title.classList.add('modal__title')
+    content.classList.add('modal__content')
+    icon.classList.add('fa-solid', 'fa-xmark')
+
+    switch (gameLang){
+        case 'en':
+            winnerSection.innerHTML = `<div>🏅 You won! 🏅</div>`
+            header.innerHTML = `🎊 You've Found The Word! 🎊`
+        break
+        case 'es':
+            winnerSection.innerHTML = `<div>🏅 ¡Haz Ganado! 🏅</div>`
+            header.innerHTML = `🎊 ¡ Encontraste la Palabra! 🎊`
+        break
+    }
+
+    paragraph.appendChild(text)
+    
+    close.appendChild(icon)
+    title.appendChild(header)
+    content.appendChild(paragraph)
+
+    modal.append(close, title, content)
+    body.appendChild(modal)
+
+    close.onclick = () => modal.remove()
 }
 
 const showAlert = (type, message) => {
@@ -182,7 +229,7 @@ const showAlert = (type, message) => {
     window.setTimeout(() => {
         main.classList.remove('blurry')
         divAlert.remove()
-    }, 1500)
+    }, 2200)
 }
 
 const callHowTo = () => {
