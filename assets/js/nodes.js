@@ -5,14 +5,17 @@ const keyboard = [
 ]
 const title = ['W','O','R','D','L','E','J','S']
 
-let fourLettersArray = ['p','i','l','a']
-let fiveLettersArray = ['v','o','l','a','r']
-let sixLettersArray = ['p','l','a','t','z','i']
+let fourLettersArray = ['p','i','l','e']
+let fiveLettersArray = ['w','h','i','l','e']
+let sixLettersArray = ['s','t','a','r','t','s']
 let gameArray = []
+let gameLength = 4
 let tries = 1
 let gameFinished = false
 let gameLang = 'en'
 let userArray = []
+let esExist = 0
+let enExiste = 0
 
 const $ = (id) => document.querySelector(id)
 
@@ -125,7 +128,22 @@ const howToLangs = {
     }
 }
 
-/* Axios helpers */
-const API_URL = 'https://od-api.oxforddictionaries.com/api/v2'
-const API_ID = '162f38c1'
-const API_KEY = '2ffcff682b4bb9445ee084b6dfb621e1'
+/* aPIs consumption */
+const API_ES = 'https://palabras-aleatorias-public-api.herokuapp.com/'
+const API_ES_RNDM = 'palabras-aleatorias'
+const API_ES_BYLENGTH = 'random-by-length'
+const API_ES_MULTI = 'multiple-random'
+
+const apiEs = axios.create({
+    baseURL: API_ES
+})
+
+const API_EN = 'https://api.wordnik.com/v4/words.json/'
+const API_EN_KEY = ''
+
+const apiEn = axios.create({
+    baseURL: API_EN,
+    headers: {
+        'api_key': API_EN_KEY
+    }
+})
