@@ -75,9 +75,8 @@ const howToLangs = {
                 <div class="card card--green">s</div>
             </div>
             <h1>🏅</h1>
-            <div>
-                
-            </div>
+            <a href="https://github.com/agonzalezf87/wordle" target="_blank"><i class="fa-brands fa-git-alt"></i> Repository</a>
+            <a href="https://github.com/agonzalezf87" target="_blank"><i class="fa-brands fa-github"></i> Other projects</a>
         `
     },
     es:
@@ -120,6 +119,8 @@ const howToLangs = {
                 <div class="card card--green">a</div>
             </div>
             <h1>🏅</h1>
+            <a href="https://github.com/agonzalezf87/wordle" target="_blank"><i class="fa-brands fa-git-alt"></i> Repositorio</a>
+            <a href="https://github.com/agonzalezf87" target="_blank"><i class="fa-brands fa-github"></i> Otros Proyectos</a>
         `
     }
 }

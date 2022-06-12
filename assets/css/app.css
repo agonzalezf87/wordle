@@ -7,6 +7,7 @@
     --site-color2-hover: rgba(99, 38, 140, .4);
     --site-color3: #6732D9;
     --site-color4: #3321A6;
+    --site-color4-hover: rgba(51, 33, 166, .6);
     --site-color5: #131159;
     --site-color6: #21023D;
     --site-white: #fff;
@@ -380,6 +381,26 @@ button:active {
 
 .modal__content p {
     width: 100%;
+}
+
+.modal__content a {
+    font-size: 1.4rem;
+    margin: 0 5px;
+    color: var(--site-white);
+    background-color: var(--site-color4);
+    border: 2px solid transparent;
+    padding: 5px 8px;
+    border-radius: 25px;
+}
+
+.modal__content a:hover {
+    background-color: var(--site-color4-hover);
+}
+
+.modal__content a:active {
+    background-color: var(--site-color4-hover);
+    border: 2px solid var(--site-color4);
+    box-shadow: 1px 1px 2px var(--site-color1);
 }
 
 /* Winner modal */
